@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
+import Wrapper from './App';
 
-AppRegistry.registerComponent('whatisthisword', () => App);
+AppRegistry.registerComponent('whatisthisword', () => Wrapper);

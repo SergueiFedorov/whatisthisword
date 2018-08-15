@@ -21,10 +21,14 @@ import {
 } from 'react-navigation';
 import { GuessWord } from './screens/GuessWord';
 import { ChallengeAFriend } from './screens/ChallengeAFriend';
+import { createPlayerMiddlware } from './middleware/player';
+import { createPlayer } from './actions/player';
+import { connect } from 'react-redux'
 
 let store = createStore(
   reducerPack,
-  applyMiddleware(actionDebugger)
+  applyMiddleware(actionDebugger),
+  applyMiddleware(createPlayerMiddlware)
 )
 
 const instructions = Platform.select({
@@ -42,13 +46,51 @@ const Nav = createStackNavigator({
   initialRouteName: "Home" 
 })
 
-const App = ({}) => {
+// class App extends Component {
+
+//   constructor(state) {
+//     self.state = state
+//   }
+
+//   componentDidMount() {
+
+//   }
+
+//    render() {
+//       (
+//         <Provider store={store}>
+//           <Nav />
+//         </Provider>
+//       )
+//    }
+  
+// }
+
+
+let App = ({createPlayer}) => {
+  createPlayer()
   return (
-    <Provider store={store}>
       <Nav />
-    </Provider>
   )
 }
+
+let Wrapper = () => {
+  return (
+  <Provider store={store}>
+    <App />
+  </Provider>
+  )
+}
+
+
+App = connect(
+  null,
+  (dispatch) => {
+      return {
+          createPlayer: () => dispatch(createPlayer())
+      }
+  }
+)(App)
 
 const styles = StyleSheet.create({
   container: {
@@ -69,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App
+export default Wrapper

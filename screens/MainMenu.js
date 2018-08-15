@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, Button, View, SectionList } from 'react-native'
 import { connect } from 'react-redux'
 import { startChallenge } from '../actions/navigation';
+import { CREATE_PLAYER } from '../actions/player';
 
 
 let MainMenu = ({navigation}) => {
